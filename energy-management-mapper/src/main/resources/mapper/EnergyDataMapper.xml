@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartpark.mapper.EnergyDataMapper">
+
+    <sql id="Base_Column_List">
+        id, device_id, device_name, park_id, park_name, building_id, building_name, floor,
+        energy_type, energy_value, total_energy, collect_time, status, remark, create_time,
+        update_time, deleted
+    </sql>
+
+    <select id="selectByQuery" resultType="com.smartpark.model.do.EnergyDataDO">
+        SELECT <include refid="Base_Column_List"/>
+        FROM energy_data
+        WHERE deleted = 0
+        <if test="query.parkId != null">
+            AND park_id = #{query.parkId}
+        </if>
+        <if test="query.buildingId != null">
+            AND building_id = #{query.buildingId}
+        </if>
+        <if test="query.floor != null">
+            AND floor = #{query.floor}
+        </if>
+        <if test="query.energyType != null">
+            AND energy_type = #{query.energyType}
+        </if>
+        <if test="query.deviceId != null and query.deviceId != ''">
+            AND device_id = #{query.deviceId}
+        </if>
+        <if test="query.startTime != null">
+            AND collect_time &gt;= #{query.startTime}
+        </if>
+        <if test="query.endTime != null">
+            AND collect_time &lt;= #{query.endTime}
+        </if>
+        <if test="query.status != null">
+            AND status = #{query.status}
+        </if>
+        ORDER BY ${query.orderBy} ${query.orderDirection}
+        LIMIT #{query.pageNum}, #{query.pageSize}
+    </select>
+
+    <select id="sumEnergyValue" resultType="java.math.BigDecimal">
+        SELECT IFNULL(SUM(energy_value), 0)
+        FROM energy_data
+        WHERE deleted = 0
+        <if test="parkId != null">
+            AND park_id = #{parkId}
+        </if>
+        <if test="buildingId != null">
+            AND building_id = #{buildingId}
+        </if>
+        <if test="energyType != null">
+            AND energy_type = #{energyType}
+        </if>
+        <if test="startTime != null">
+            AND collect_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND collect_time &lt;= #{endTime}
+        </if>
+    </select>
+
+    <select id="selectHourlyStatistics" resultType="java.util.Map">
+        SELECT
+            DATE_FORMAT(collect_time, '%Y-%m-%d %H:00:00') AS time_point,
+            IFNULL(SUM(energy_value), 0) AS total_energy
+        FROM energy_data
+        WHERE deleted = 0
+        <if test="parkId != null">
+            AND park_id = #{parkId}
+        </if>
+        <if test="energyType != null">
+            AND energy_type = #{energyType}
+        </if>
+        <if test="startTime != null">
+            AND collect_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND collect_time &lt;= #{endTime}
+        </if>
+        GROUP BY time_point
+        ORDER BY time_point ASC
+    </select>
+
+    <select id="selectDailyStatistics" resultType="java.util.Map">
+        SELECT
+            DATE_FORMAT(collect_time, '%Y-%m-%d') AS time_point,
+            IFNULL(SUM(energy_value), 0) AS total_energy
+        FROM energy_data
+        WHERE deleted = 0
+        <if test="parkId != null">
+            AND park_id = #{parkId}
+        </if>
+        <if test="energyType != null">
+            AND energy_type = #{energyType}
+        </if>
+        <if test="startTime != null">
+            AND collect_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND collect_time &lt;= #{endTime}
+        </if>
+        GROUP BY time_point
+        ORDER BY time_point ASC
+    </select>
+
+    <select id="selectMonthlyStatistics" resultType="java.util.Map">
+        SELECT
+            DATE_FORMAT(collect_time, '%Y-%m') AS time_point,
+            IFNULL(SUM(energy_value), 0) AS total_energy
+        FROM energy_data
+        WHERE deleted = 0
+        <if test="parkId != null">
+            AND park_id = #{parkId}
+        </if>
+        <if test="energyType != null">
+            AND energy_type = #{energyType}
+        </if>
+        <if test="startTime != null">
+            AND collect_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND collect_time &lt;= #{endTime}
+        </if>
+        GROUP BY time_point
+        ORDER BY time_point ASC
+    </select>
+</mapper>
