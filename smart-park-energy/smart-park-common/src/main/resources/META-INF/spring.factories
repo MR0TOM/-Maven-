@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.smartpark.common.config.WebConfig,\
+com.smartpark.common.config.JacksonConfig

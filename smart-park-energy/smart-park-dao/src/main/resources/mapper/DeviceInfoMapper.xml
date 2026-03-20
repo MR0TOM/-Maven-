@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartpark.dao.mapper.DeviceInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.smartpark.entity.model.DeviceInfo">
+        <id column="id" property="id"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_model" property="deviceModel"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="install_date" property="installDate"/>
+        <result column="warranty_date" property="warrantyDate"/>
+        <result column="status" property="status"/>
+        <result column="online_status" property="onlineStatus"/>
+        <result column="last_comm_time" property="lastCommTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+</mapper>
