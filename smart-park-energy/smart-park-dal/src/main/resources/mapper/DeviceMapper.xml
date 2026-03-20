@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartpark.dal.mapper.DeviceMapper">
+
+    <resultMap id="BaseResultMap" type="com.smartpark.model.entity.Device">
+        <id column="id" property="id"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="building_id" property="buildingId"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="energy_type" property="energyType"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="model" property="model"/>
+        <result column="location" property="location"/>
+        <result column="install_date" property="installDate"/>
+        <result column="last_maintenance_date" property="lastMaintenanceDate"/>
+        <result column="status" property="status"/>
+        <result column="rated_power" property="ratedPower"/>
+        <result column="communication_protocol" property="communicationProtocol"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, device_code, device_name, building_id, device_type, energy_type, manufacturer,
+        model, location, install_date, last_maintenance_date, status, rated_power,
+        communication_protocol, create_by, create_time, update_by, update_time,
+        delete_flag, version
+    </sql>
+
+</mapper>
